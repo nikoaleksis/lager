@@ -9,8 +9,15 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.base}>
-        <Text style={{color: '#33c', fontSize: 42}}>Lager-Appen</Text>
-        <Image source={warehouse} style={{ width: 320, height: 240 }} />
+        <Text style={{color: '#fff', fontSize: 42, margin: 8}}>Lager-Appen</Text>
+        <Image source={warehouse} style={{ 
+          width: 320, 
+          height: 240, 
+          marginLeft: 5, 
+          marginRight: 5,
+          borderRadius: 150,
+          borderWidth: 3,
+          borderColor: '#fff' }} />
         <Stock />
         <StatusBar style="auto" />
       </View>
@@ -24,7 +31,7 @@ const styles = StyleSheet.create({
   },
   base: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#333',
     paddingLeft: 12,
     paddingRight: 12,
   }
