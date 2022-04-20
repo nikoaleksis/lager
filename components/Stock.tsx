@@ -1,34 +1,42 @@
 import { useState, useEffect } from 'react';
-import { Text, View, } from 'react-native';
-import config from "../config/config.json";
+import { Text, ScrollView, } from 'react-native';
+import productModel from '../models/products';
+import { Base, Typography } from '../styles';
+import Product from '../interfaces/product';
 
-function StockList() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    fetch(`${config.base_url}/products?api_key=${config.api_key}`)
-      .then(response => response.json())
-      .then(result => setProducts(result.data));
+function StockList(
+  { products, setProducts } : 
+  { products: Array<Product>, setProducts: (products: Array<Product>) => void }
+) {
+  useEffect(async () => {
+    setProducts(await productModel.getProducts());
   }, []);
 
-  const list = products.map((product, index) => 
-    <Text style={{ color: '#fff', fontSize: 12, marginBottom: 4 }} key={index}>
-      { product.name } - { product.stock }
-    </Text>
-  );
+  const list = products.map((product, index) => {
+    const isOutOfStock = product.stock === 0;
+    return <Text 
+    style={ Typography.normal }
+            key={index}>
+             • { product.name } - { product.stock }
+             <Text style={ Typography.normalWarning }>{isOutOfStock ? " | Slut i lager!!" : ""}</Text>
+            </Text>
+  });
 
   return (
-    <View style={{ margin: 10 }}>
+    <ScrollView style={ Base.base }>
       {list}
-    </View>
+    </ScrollView>
   );
 }
 
-export default function Stock() {
+export default function Stock(
+  { products, setProducts } : 
+  { products: Array<Product>, setProducts: (products: Array<Product>) => void }
+) {
   return (
-    <View>
-      <Text style={{ color: '#fff', fontSize: 24, margin: 6 }}>Lagerförteckning</Text>
-      <StockList />
-    </View>
+    <ScrollView>
+      <Text style={Typography.header3}>Lagerförteckning</Text>
+      <StockList products={products} setProducts={setProducts} />
+    </ScrollView>
   );
 }
