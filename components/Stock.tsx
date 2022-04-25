@@ -8,8 +8,8 @@ function StockList(
   { products, setProducts } : 
   { products: Array<Product>, setProducts: (products: Array<Product>) => void }
 ) {
-  useEffect(async () => {
-    setProducts(await productModel.getProducts());
+  useEffect(() => {
+      (async () => setProducts(await productModel.getProducts()))();
   }, []);
 
   const list = products.map((product, index) => {

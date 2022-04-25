@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Home from './components/Home';
 import Pick from './components/Pick';
+import Deliveries from './components/Deliveries';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -35,6 +36,9 @@ export default function App() {
           </Tab.Screen>
           <Tab.Screen name='Plocklista'>
           {() => <Pick setProducts={setProducts} />}
+          </Tab.Screen>
+          <Tab.Screen name='Inleveranser'>
+          {() => <Deliveries setProducts={ setProducts }/>}
           </Tab.Screen>
         </Tab.Navigator>
       </NavigationContainer>

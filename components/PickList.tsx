@@ -28,8 +28,8 @@ export default function PickList(
   const { order } = route.params;
   const [productsList, setProductsList] = useState([]);
 
-  useEffect(async () => {
-    setProductsList(await productModel.getProducts());
+  useEffect(() => {
+    (async () => setProductsList(await productModel.getProducts()))();
   }, []);
 
   async function pick() {

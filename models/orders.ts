@@ -46,7 +46,6 @@ const orders = {
         id: item.product_id,
         stock: item.stock - item.amount,
       };
-      console.log(`Item name: ${item.name}\n Item stock: ${item.stock}\n ${item.amount}`);
       const status = await productModel.updateProduct(product);
     });
     // Update the order status

@@ -25,6 +25,12 @@ export const normal = {
   marginBottom: 28,
 };
 
+export const label = {
+  color: mainColor,
+  fontSize: 20,
+  marginBottom: 4,
+};
+
 export const normalWarning = {
   color: warningColor,
   fontSize: 20,
