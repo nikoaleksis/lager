@@ -10,6 +10,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import Auth from './components/auth/Auth';
 import authModel from './models/auth';
+import Product from './interfaces/product';
 
 const Tab = createBottomTabNavigator();
 const routeIcons = {
@@ -18,7 +19,7 @@ const routeIcons = {
 }
 
 export default function App() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
   
   useEffect(() => {
