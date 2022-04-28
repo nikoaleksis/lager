@@ -1,37 +1,55 @@
+import { NavigationContainer } from '@react-navigation/native';
 import { View, Text, TextInput, Button } from 'react-native';
 import Auth from '../../interfaces/auth';
-import auth from '../../models/auth';
+import { Base, Typography, Form } from '../../styles';
 
 type AuthFieldProps = {
+  title: string,
   auth: Partial<Auth>,
-  title: string
   setAuth: (auth: Partial<Auth>) => void,
   submit: () => void,
+  navigation: any
 };
 
-export default function AuthFields({ props } : { props: AuthFieldProps}) {
-  return <View>
-      <Text>{props.title}</Text>
-      <Text>E-post</Text>
-      <TextInput 
+export default function AuthFields(props: AuthFieldProps) {
+  return <View style={Base.base}>
+      <Text style={Typography.header1}>{props.title}</Text>
+      
+      <Text style={Typography.label}>E-post</Text>
+      <TextInput
+        style={Form.input}
         onChangeText={
           (content: string) => props.setAuth({...props.auth, email:content})
         }
-        //value={auth?.email}
+        autoCapitalize="none"
+        autoCompleteType="off"
         keyboardType="email-address"
+        //value={auth?.email}
       />
-      <Text>Løsenord</Text>
-      <TextInput 
+      
+      <Text style={Typography.label}>Løsenord</Text>
+      <TextInput
+        style={Form.input}
         onChangeText={
           (content: string) => props.setAuth({...props.auth, password:content})
         }
-        //value={auth?.password}
         secureTextEntry={true}
+        autoCompleteType="off"
+        autoCapitalize="none"
+        //value={auth?.password}
       />
-
       <Button 
+        color={'#222'}
         title={props.title}
-        onPress={() => props.submit}
+        onPress={() => props.submit()}
       />
+      <View style={Form.div(14)}/> 
+      {props.title === 'Logga in' &&
+        <Button
+          color={'#222'}
+          title='Registrera dig'
+          onPress={() => props.navigation.navigate('Register')}
+        />
+      }
   </View>
 }

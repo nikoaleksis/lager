@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { ScrollView, Text, Button } from 'react-native';
-import orderModel from '../models/orders';
-import Order from '../interfaces/order';
-import { Base, Typography } from '../styles';
+import orderModel from '../../models/orders';
+import Order from '../../interfaces/order';
+import { Base, Typography } from '../../styles';
 
 export default function OrderList(
   { route, navigation } : 

@@ -3,8 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Home from './components/Home';
-import Pick from './components/Pick';
-import Deliveries from './components/Deliveries';
+import Pick from './components/pick/Pick';
+import Deliveries from './components/delivery/Deliveries';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -15,7 +15,10 @@ import Product from './interfaces/product';
 const Tab = createBottomTabNavigator();
 const routeIcons = {
   'Lager': 'home',
-  'Plock': 'list'
+  'Plocklista': 'list',
+  'Logga in': 'log-in-outline',
+  'Inleveranser': 'bus-outline',
+  'Fakturor': 'reader-outline',
 }
 
 export default function App() {
@@ -40,21 +43,29 @@ export default function App() {
       })}
       >
           <Tab.Screen name='Lager'>
-            {() => <Home products={products} setProducts={setProducts} />}
+            {() => <Home products={products} setProducts={ setProducts} /> }
           </Tab.Screen>
           <Tab.Screen name='Plocklista'>
           {() => <Pick setProducts={setProducts} />}
           </Tab.Screen>
           <Tab.Screen name='Inleveranser'>
-          {() => <Deliveries setProducts={ setProducts }/>}
+          {() => <Deliveries setProducts={setProducts} />}
           </Tab.Screen>
-          {isLoggedIn ?  
-            <Tab.Screen name='Inleveranser'>
-              {() => <Pick setProducts={ setProducts }/>}
+          {isLoggedIn ?
+            <Tab.Screen name='Fakturor'>
+              {() => <Deliveries setProducts={ setProducts }/>}
             </Tab.Screen> : 
             <Tab.Screen name='Logga in'>
-              {() => <Auth setIsLoggedIn={setIsLoggedIn} />}
+              {() => <Auth setIsLoggedIn={ setIsLoggedIn } />}
             </Tab.Screen>
+          }
+          {isLoggedIn ?
+            <Tab.Screen name='Logga ut'>
+            {() => <Auth 
+              setIsLoggedIn={ setIsLoggedIn } 
+              isLoggedIn={isLoggedIn}
+              />}
+          </Tab.Screen> : null
           }
         </Tab.Navigator>
       </NavigationContainer>

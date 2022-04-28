@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { ScrollView, Text, Button, Alert } from 'react-native';
-import orderModel from '../models/orders';
-import productModel from '../models/products';
-import Product from '../interfaces/product';
-import OrderItem from '../interfaces/order_item';
-import { Base, Typography } from '../styles';
+import orderModel from '../../models/orders';
+import productModel from '../../models/products';
+import Product from '../../interfaces/product';
+import OrderItem from '../../interfaces/order_item';
+import { Base, Typography } from '../../styles';
 
 function alertItemNotInStock(items: Array<OrderItem>) {
   // Build a string which explains which items are not in stock

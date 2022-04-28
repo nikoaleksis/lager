@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import DeliveriesList from './DeliveriesList';
 import DeliveryForm from './DeliveryForm';
-import Product from '../interfaces/product';
+import Product from '../../interfaces/product';
 
 const Stack = createNativeStackNavigator();
 

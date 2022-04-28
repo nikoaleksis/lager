@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
 import { ScrollView, Text, TextInput, Button, Platform, View } from "react-native";
-import { Base, Typography, Form } from '../styles';
-import productModel from '../models/products';
-import deliveryModel from '../models/deliveries';
-import Delivery from '../interfaces/delivery';
-import Product from '../interfaces/product';
+import { Base, Typography, Form } from '../../styles';
+import productModel from '../../models/products';
+import deliveryModel from '../../models/deliveries';
+import Delivery from '../../interfaces/delivery';
+import Product from '../../interfaces/product';
 
 type ProductDDProps = {
     delivery: Partial<Delivery>,
@@ -54,7 +54,7 @@ function DateDropDown(props: DateTimePickerProps) {
     };
 
     return (
-        <View style={ Form.div }>
+        <View style={ Form.div(14) }>
             {Platform.OS === 'android' && (
             <Button color="#222" onPress={showDatePicker} title="Visa datumvæljare"/>
             )}
