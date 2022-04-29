@@ -5,25 +5,24 @@ import Order from '../../interfaces/order';
 import { Base, Typography } from '../../styles';
 
 export default function OrderList(
-  { route, navigation } : 
-  { route: any, navigation: any}
+  { route, navigation, orders, setOrders } : 
+  { route: any, navigation: any, orders: Order[], setOrders: (orders: Order[]) => void}
   ) {
   const { reload } = route.params || false;
-  const [allOrders, setAllOrders] = useState([]);
 
   if (reload) {
     reloadOrders();
   }
 
   async function reloadOrders() {
-    setAllOrders(await orderModel.getOrders());
+    setOrders(await orderModel.getOrders());
   }
 
   useEffect(() => {
     reloadOrders();
   }, []);
 
-  const listOfOrders = allOrders
+  const listOfOrders = orders
     .filter((order: Order) => order.status === 'Ny')
     .map((order: Order, index: number) => {
       return <Button

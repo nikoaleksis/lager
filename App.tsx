@@ -11,6 +11,8 @@ import { Ionicons } from '@expo/vector-icons';
 import Auth from './components/auth/Auth';
 import authModel from './models/auth';
 import Product from './interfaces/product';
+import Order from './interfaces/order';
+import Invoices from './components/invoice/Invoices';
 
 const Tab = createBottomTabNavigator();
 const routeIcons = {
@@ -24,7 +26,8 @@ const routeIcons = {
 export default function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
-  
+  const [orders, setOrders] = useState<Order[]>([]);
+
   useEffect(() => {
     (async () => authModel.isLoggedIn());
   });
@@ -46,14 +49,14 @@ export default function App() {
             {() => <Home products={products} setProducts={ setProducts} /> }
           </Tab.Screen>
           <Tab.Screen name='Plocklista'>
-          {() => <Pick setProducts={setProducts} />}
+          {() => <Pick setProducts={setProducts} orders={orders} setOrders={setOrders} />}
           </Tab.Screen>
           <Tab.Screen name='Inleveranser'>
           {() => <Deliveries setProducts={setProducts} />}
           </Tab.Screen>
           {isLoggedIn ?
             <Tab.Screen name='Fakturor'>
-              {() => <Deliveries setProducts={ setProducts }/>}
+              {() => <Invoices orders={orders} setOrders={setOrders} />}
             </Tab.Screen> : 
             <Tab.Screen name='Logga in'>
               {() => <Auth setIsLoggedIn={ setIsLoggedIn } />}

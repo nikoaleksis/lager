@@ -4,6 +4,7 @@ import orderModel from '../../models/orders';
 import productModel from '../../models/products';
 import Product from '../../interfaces/product';
 import OrderItem from '../../interfaces/order_item';
+import Order from '../../interfaces/order';
 import { Base, Typography } from '../../styles';
 
 function alertItemNotInStock(items: Array<OrderItem>) {
@@ -22,8 +23,8 @@ function alertItemNotInStock(items: Array<OrderItem>) {
 }
 
 export default function PickList(
-  { route, navigation, setProducts } : 
-  { route: any, navigation: any, setProducts: (products: Array<Product>) => void}
+  { route, navigation, setProducts, setOrders } : 
+  { route: any, navigation: any, setProducts: (products: Array<Product>) => void, setOrders: (orders: Order[]) => void}
 ) {
   const { order } = route.params;
   const [productsList, setProductsList] = useState([]);
@@ -36,6 +37,7 @@ export default function PickList(
     const itemsNotInStock: Array<OrderItem> = await orderModel.pickOrder(order);
     if (itemsNotInStock.length > 0) {
       alertItemNotInStock(itemsNotInStock);
+      return;
     }
     setProducts(await productModel.getProducts());
     navigation.navigate('List', { reload: true });
