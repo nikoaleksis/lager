@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { ScrollView, Text, Button, Alert } from 'react-native';
-import orderModel from '../models/orders';
-import productModel from '../models/products';
-import Product from '../interfaces/product';
-import OrderItem from '../interfaces/order_item';
-import { Base, Typography } from '../styles';
+import orderModel from '../../models/orders';
+import productModel from '../../models/products';
+import Product from '../../interfaces/product';
+import OrderItem from '../../interfaces/order_item';
+import Order from '../../interfaces/order';
+import { Base, Typography } from '../../styles';
 
 function alertItemNotInStock(items: Array<OrderItem>) {
   // Build a string which explains which items are not in stock
@@ -23,8 +24,7 @@ function alertItemNotInStock(items: Array<OrderItem>) {
 
 export default function PickList(
   { route, navigation, setProducts } : 
-  { route: any, navigation: any, setProducts: (products: Array<Product>) => void}
-) {
+  { route: any, navigation: any, setProducts: (products: Array<Product>) => void}) {
   const { order } = route.params;
   const [productsList, setProductsList] = useState([]);
 
@@ -33,9 +33,11 @@ export default function PickList(
   }, []);
 
   async function pick() {
-    const itemsNotInStock: Array<OrderItem> = await orderModel.pickOrder(order);
+    const currentOrder: Order = await orderModel.getOrderById(order.id); 
+    const itemsNotInStock: Array<OrderItem> = await orderModel.pickOrder(currentOrder);
     if (itemsNotInStock.length > 0) {
       alertItemNotInStock(itemsNotInStock);
+      return;
     }
     setProducts(await productModel.getProducts());
     navigation.navigate('List', { reload: true });

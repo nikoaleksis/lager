@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { ScrollView, Text, Button } from 'react-native';
+import { Base, Typography } from '../../styles';
 import { Card, CardTitle, CardContent } from 'react-native-material-cards';
-import { Base, Typography } from '../styles';
-import Delivery from '../interfaces/delivery';
-import deliveryModel from '../models/deliveries';
+import Delivery from '../../interfaces/delivery';
+import deliveryModel from '../../models/deliveries';
 
 export default function Deliveries({ navigation } : { navigation: any}) {
   const [deliveries, setDeliveriesList] = useState<Delivery[]>([]);
