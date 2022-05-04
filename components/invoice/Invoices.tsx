@@ -1,21 +1,36 @@
+import { useState, useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import InvoiceForm from './InvoiceForm';
+import InvoicesList from './InvoicesList';
+import invoiceModel from '../../models/invoices';
+import Invoice from '../../interfaces/invoice';
 import Order from '../../interfaces/order';
 
 const Stack = createNativeStackNavigator();
 
-type InvoicesProps = {
-  orders: Order[],
-  setOrders: (orders: Order[]) => void,
-};
+export default function Invoices() {
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
+  
+  useEffect(() => {
+    (async () => setInvoices(await invoiceModel.getInvoices()))();
+  }, []);
 
-export default function Invoices(props: InvoicesProps) {
   return (
-    <Stack.Navigator initialRouteName="Form">
-      {/*<Stack.Screen name="List" component={InvoicesList} />*/}
+    <Stack.Navigator initialRouteName="List">
+      <Stack.Screen name="List" options={{ title: "Fakturalista" }}>
+        {(screenProps) => <InvoicesList
+          navigation={screenProps.navigation}
+          invoices={invoices}
+          setInvoices={setInvoices}
+        />}
+      </Stack.Screen>
       <Stack.Screen name="Form" options={{ title: "Formulær" }}>
-        {(screenProps) => <InvoiceForm orders={props.orders} setOrders={props.setOrders} />}
-      </Stack.Screen> 
+        {(screenProps) => <InvoiceForm
+          navigation={screenProps.navigation}
+          invoices={invoices}
+          setInvoices={setInvoices}
+        />}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };

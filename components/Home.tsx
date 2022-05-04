@@ -7,7 +7,7 @@ import Product from '../interfaces/product';
 
 export default function Home(
   { products, setProducts } : 
-  { products: Array<Product>, setProducts: () => void }
+  { products: Array<Product>, setProducts: (products: Product[]) => void }
 ) {
   return (
     <ScrollView style={Base.base}>

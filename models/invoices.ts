@@ -20,8 +20,22 @@ const invoice = {
         body: payload,
       }
       );
-    console.log(response.status);
     return response.status;
+  },
+  getInvoices: async function getInvoices() {
+    const tokenObj = await storageModel.readToken();
+    const token = tokenObj.token;
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('x-access-token', token);
+
+    const response = await fetch(
+      `${config.base_url}/invoices?api_key=${config.api_key}`, {
+        headers: headers
+      }
+      );
+    const result = await response.json();
+    return result.data;
   }
 }
 

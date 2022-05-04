@@ -46,17 +46,17 @@ export default function App() {
       })}
       >
           <Tab.Screen name='Lager'>
-            {() => <Home products={products} setProducts={ setProducts} /> }
+            {() => <Home products={products} setProducts={setProducts} /> }
           </Tab.Screen>
           <Tab.Screen name='Plocklista'>
-          {() => <Pick setProducts={setProducts} orders={orders} setOrders={setOrders} />}
+          {() => <Pick setProducts={setProducts} />}
           </Tab.Screen>
           <Tab.Screen name='Inleveranser'>
           {() => <Deliveries setProducts={setProducts} />}
           </Tab.Screen>
           {isLoggedIn ?
             <Tab.Screen name='Fakturor'>
-              {() => <Invoices orders={orders} setOrders={setOrders} />}
+              {() => <Invoices setOrders={setOrders} />}
             </Tab.Screen> : 
             <Tab.Screen name='Logga in'>
               {() => <Auth setIsLoggedIn={ setIsLoggedIn } />}

@@ -9,6 +9,11 @@ const orders = {
     const result = await response.json();
     return result.data;
   },
+  getOrderById: async function getOrderById(id: number) {
+    const response = await fetch(`${config.base_url}/orders/${id}?api_key=${config.api_key}`);
+    const result = await response.json();
+    return result.data;
+  },
   updateOrder: async function updateOrder(order: Partial<Order>) {
     const payload = JSON.stringify(
       Object.assign(order, {api_key: config.api_key}));

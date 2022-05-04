@@ -23,9 +23,8 @@ function alertItemNotInStock(items: Array<OrderItem>) {
 }
 
 export default function PickList(
-  { route, navigation, setProducts, setOrders } : 
-  { route: any, navigation: any, setProducts: (products: Array<Product>) => void, setOrders: (orders: Order[]) => void}
-) {
+  { route, navigation, setProducts } : 
+  { route: any, navigation: any, setProducts: (products: Array<Product>) => void}) {
   const { order } = route.params;
   const [productsList, setProductsList] = useState([]);
 
@@ -34,7 +33,8 @@ export default function PickList(
   }, []);
 
   async function pick() {
-    const itemsNotInStock: Array<OrderItem> = await orderModel.pickOrder(order);
+    const currentOrder: Order = await orderModel.getOrderById(order.id); 
+    const itemsNotInStock: Array<OrderItem> = await orderModel.pickOrder(currentOrder);
     if (itemsNotInStock.length > 0) {
       alertItemNotInStock(itemsNotInStock);
       return;

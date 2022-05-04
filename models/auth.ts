@@ -52,8 +52,7 @@ const auth = {
               body: payload,
             }
         );
-        const result = await response.json();
-        return result
+        return response.status
     },
     logout: async function logout() {
       return await storageModel.deleteToken();
