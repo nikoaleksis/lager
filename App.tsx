@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Home from './components/Home';
 import Pick from './components/pick/Pick';
+import Ship from './components/ship/Ship'
 import Deliveries from './components/delivery/Deliveries';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -26,7 +27,6 @@ const routeIcons = {
 export default function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
-  const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
     (async () => authModel.isLoggedIn());
@@ -56,7 +56,7 @@ export default function App() {
           </Tab.Screen>
           {isLoggedIn ?
             <Tab.Screen name='Fakturor'>
-              {() => <Invoices setOrders={setOrders} />}
+              {() => <Invoices />}
             </Tab.Screen> : 
             <Tab.Screen name='Logga in'>
               {() => <Auth setIsLoggedIn={ setIsLoggedIn } />}
@@ -70,6 +70,9 @@ export default function App() {
               />}
           </Tab.Screen> : null
           }
+          <Tab.Screen name='Frakt'>
+            {() => <Ship />}
+          </Tab.Screen>
         </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style='auto' />

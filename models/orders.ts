@@ -1,6 +1,7 @@
 import config from '../config/config.json';
 import Order from '../interfaces/order';
 import OrderItem from '../interfaces/order_item';
+import { OrderStatus } from '../enum/OrderStatus';
 import productModel from './products';
 
 const orders = {
@@ -8,6 +9,20 @@ const orders = {
     const response = await fetch(`${config.base_url}/orders?api_key=${config.api_key}`);
     const result = await response.json();
     return result.data;
+  },
+  getPackedOrders: async function getPackedOrders() {
+    const orders = await this.getOrders();
+    return orders.filter((order: Order) => order.status_id === OrderStatus.packed);
+  },
+  getNewOrders: async function getNewOrders() {
+    const orders = await this.getOrders();
+    return orders.filter((order: Order) => order.status_id === OrderStatus.new);
+  },
+  getReadyForInvoiceOrders: async function getReadyForInvoiceOrders() {
+    const orders = await this.getOrders();
+    return orders.filter((order: Order) => 
+      order.status_id > OrderStatus.new 
+      && order.status_id < OrderStatus.invoiced);
   },
   getOrderById: async function getOrderById(id: number) {
     const response = await fetch(`${config.base_url}/orders/${id}?api_key=${config.api_key}`);
