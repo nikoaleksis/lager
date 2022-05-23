@@ -6,8 +6,10 @@ import { Base, Typography, Form } from '../../styles';
 import orderModel from '../../models/orders';
 import invoiceModel from '../../models/invoices';
 import Order from '../../interfaces/order'; 
+import { OrderStatus } from '../../enum/OrderStatus'; 
 import Invoice from '../../interfaces/invoice'; 
 import { NavigationRouteContext } from '@react-navigation/native';
+
 
 type InvoiceDDProps = {
   invoice: Partial<Invoice>,
@@ -52,13 +54,12 @@ function OrdersDropdown(props: InvoiceDDProps) {
 
   useEffect(() => {
     (async () => {
-      setOrders(await orderModel.getOrders())
+      setOrders(await orderModel.getReadyForInvoiceOrders());
     })();
   }, []);
 
   const itemsList = 
     orders
-      .filter((order) => order.status_id > 100 && order.status_id < 600)
       .map((order, index) => {
       ordersHash[order.id] = order;
       return <Picker.Item key={index} label={order.name} value={order.id} />;

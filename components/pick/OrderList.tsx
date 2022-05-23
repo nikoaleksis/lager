@@ -2,20 +2,23 @@ import { useState, useEffect } from 'react';
 import { ScrollView, Text, Button } from 'react-native';
 import orderModel from '../../models/orders';
 import Order from '../../interfaces/order';
+import { OrderStatus } from '../../enum/OrderStatus';
 import { Base, Typography } from '../../styles';
 
 export default function OrderList(
   { route, navigation } : 
   { route: any, navigation: any }) {
   const [allOrders, setAllOrders] = useState([]);
-  const { reload } = route.params || false;
+  let { reload } = route.params || false;
 
   if (reload) {
+    console.log(route.params);
     reloadOrders();
+    route.params = undefined;
   }
 
   async function reloadOrders() {
-    setAllOrders(await orderModel.getOrders());
+    setAllOrders(await orderModel.getNewOrders());
   }
 
   useEffect(() => {
@@ -23,7 +26,6 @@ export default function OrderList(
   }, []);
 
   const listOfOrders = allOrders
-    .filter((order: Order) => order.status === 'Ny')
     .map((order: Order, index: number) => {
       return <Button
         title={order.name}
