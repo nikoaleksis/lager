@@ -18,6 +18,7 @@ const auth = {
             email: auth.email,
             password: auth.password,
         });
+
         const response = await fetch(
             `${config.base_url}/${urlPath}/login`,
             {
@@ -28,12 +29,23 @@ const auth = {
               body: payload,
             }
         );
+
         const result = await response.json();
-        if ('data' in result && 'token' in result.data) {
-          storageModel.storeToken(result.data.token);
-          return result.data.token
+        
+        if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
+          return {
+            message: result.errors.title,
+            description: result.errors.detail,
+            type: 'danger'
+          };
         }
-        return undefined;
+        storageModel.storeToken(result.data.token);
+        
+        return {
+          message: 'Inloggad',
+          description: result.data.message,
+          type: 'success'
+        }
     },
     register: async function register(auth: Partial<Auth>) {
         const payload = JSON.stringify({

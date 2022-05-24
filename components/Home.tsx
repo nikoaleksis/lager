@@ -1,7 +1,7 @@
-import { Image, StyleSheet, Text, ScrollView } from 'react-native';
+import { Image, Text, ScrollView } from 'react-native';
 //@ts-ignore
 import warehouse from '../assets/warehouse.jpg';
-import Stock from './Stock';
+import Stock from './stock/Stock';
 import { Base, Typography, Img } from '../styles';
 import Product from '../interfaces/product';
 

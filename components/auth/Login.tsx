@@ -1,19 +1,8 @@
 import { useEffect, useState } from 'react';
 import AuthFields from './AuthFields';
 import Auth from '../../interfaces/auth';
-import { Alert } from 'react-native';
 import authModel from '../../models/auth';
-
-function alertIncorrectCredentials() {
-
-  Alert.alert(
-    'Felaktiga inloggningsuppgifter',
-    'Felaktig e-post eller løsenord',
-    [
-      { text: "Ok", }
-    ]
-  );
-}
+import { showMessage } from 'react-native-flash-message';
 
 export default function Login({ navigation, setIsLoggedIn }){
   const [auth, setAuth] = useState<Partial<Auth>>({});
@@ -21,12 +10,19 @@ export default function Login({ navigation, setIsLoggedIn }){
   async function doLogin() {
     if (auth.email && auth.password) {
       const result = await authModel.login(auth);
-      if (result) {
+      if (result.type === 'success') {
         setIsLoggedIn(true);
+        showMessage(result);
         return;
       }
-      alertIncorrectCredentials();
+      showMessage(result);
+      return;
     }
+    showMessage({
+      message: "Saknas",
+      description: "E-post eller løsenord saknas",
+      type: "warning",
+    });
   }
 
   return (

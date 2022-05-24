@@ -12,8 +12,8 @@ import { Ionicons } from '@expo/vector-icons';
 import Auth from './components/auth/Auth';
 import authModel from './models/auth';
 import Product from './interfaces/product';
-import Order from './interfaces/order';
 import Invoices from './components/invoice/Invoices';
+import FlashMessage from 'react-native-flash-message';
 
 const Tab = createBottomTabNavigator();
 const routeIcons = {
@@ -76,6 +76,7 @@ export default function App() {
         </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style='auto' />
+      <FlashMessage position="top" />
     </SafeAreaView>
   );
 }
