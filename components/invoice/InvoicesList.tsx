@@ -27,12 +27,12 @@ function showInvoiceDetails(invoice: Partial<Invoice>) {
   Alert.alert(
     "Fakturadetaljer",
     `Namn: ${invoice.name}
-Adress: ${invoice.address}
-Postkod: ${invoice.zip}
-Stad: ${invoice.city}
-Skapad: ${formatDate(invoice.creation_date as string)}
-Førfallodatum: ${formatDate(invoice.due_date as string)}
-Pris: ${invoice.total_price}SEK`,
+    Adress: ${invoice.address}
+    Postkod: ${invoice.zip}
+    Stad: ${invoice.city}
+    Skapad: ${formatDate(invoice.creation_date as string)}
+    Førfallodatum: ${formatDate(invoice.due_date as string)}
+    Pris: ${invoice.total_price}SEK`,
     [
       { text: "Ok", }
     ]
@@ -42,7 +42,10 @@ Pris: ${invoice.total_price}SEK`,
 export default function InvoiceList(props: InvoiceListProps) {
   const table = props.invoices.map((invoice) => {
     return (
-      <TouchableOpacity key={invoice.id} onPress={() => showInvoiceDetails(invoice)} >
+      <TouchableOpacity 
+        accessibilityLabel="Klicka før mer info"
+        key={invoice.id} 
+        onPress={() => showInvoiceDetails(invoice)} >
         <DataTable.Row >
           <DataTable.Cell><Text style={{ color: '#fff' }}>{invoice.name}</Text></DataTable.Cell>
           <DataTable.Cell numeric><Text style={{ color: '#fff' }}>{formatDate(invoice.due_date)}</Text></DataTable.Cell>

@@ -5,7 +5,7 @@ import { Card, CardTitle, CardContent } from 'react-native-material-cards';
 import Delivery from '../../interfaces/delivery';
 import deliveryModel from '../../models/deliveries';
 
-export default function Deliveries({ navigation } : { navigation: any}) {
+export default function DeliveriesList({ navigation } : { navigation: any}) {
   const [deliveries, setDeliveriesList] = useState<Delivery[]>([]);
   let listOfDeliveries;
   useEffect(() => {
@@ -14,7 +14,10 @@ export default function Deliveries({ navigation } : { navigation: any}) {
 
   
   listOfDeliveries = deliveries.map((delivery, index) => {
-    return <Card style={Base.card} key={ index }>
+    return <Card
+        testID={delivery.product_name}
+        style={Base.card} 
+        key={ index }>
       <CardTitle title={`${delivery.amount}st. ${delivery.product_name}`} />
       <CardContent text={`Levererad: ${delivery.delivery_date}`} />
       <CardContent text={`Kommentar: ${delivery.comment}`} />

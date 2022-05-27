@@ -7,20 +7,21 @@ import productModel from '../../models/products';
 import deliveryModel from '../../models/deliveries';
 import Delivery from '../../interfaces/delivery';
 import Product from '../../interfaces/product';
+import { showMessage } from 'react-native-flash-message';
 
-function validateDelivery(delivery: Partial<Delivery>) {
+function isValidated(delivery: Partial<Delivery>) {
+    console.log(delivery);
     if (
-        !delivery.amount || 
+        !delivery.amount ||
         !delivery.comment || 
-        !delivery.delivery_date) {
-        
-        Alert.alert(
-            "Fyll i alla fælt",
-            'Alla fælten ær inte ifyllda',
-            [
-              { text: "Ok", }
-            ]
-        );
+        !delivery.delivery_date ||
+        !delivery.product_id) {
+
+        showMessage({
+            message: 'Fyll i fælten',
+            description: 'Du måste fylla i kommentar, antal, produkt samt vælja datum',
+            type: 'warning',
+        });
         return false;
     }
     return true
@@ -106,7 +107,7 @@ export default function DeliveryForm({ navigation, setProducts } :
     const [currentProduct, setCurrentProduct] = useState<Partial<Product>>({});
 
     async function addDelivery() {
-        if (!validateDelivery(delivery)) {
+        if (!isValidated(delivery)) {
             return;
         }
 

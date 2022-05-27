@@ -18,7 +18,7 @@ export default function ShipList({ navigation } : { navigation : any}) {
 
   const listOfOrders = orders.map((order: Order) => {
     return (
-      <Button 
+      <Button
         title={order.name}
         key={order.id}
         color='#222'
@@ -31,7 +31,7 @@ export default function ShipList({ navigation } : { navigation : any}) {
 
   return (
     <View style={ Base.base }>
-      <Text style={ Typography.header2 }>Ordrar redo att Skickas</Text>
+      <Text style={ Typography.header2 }>Ordrar redo att skickas</Text>
       {listOfOrders}
     </View>
   )
